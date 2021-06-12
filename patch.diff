@@ -1,0 +1,46 @@
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 00000000..c758ca7f
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "logo/alternative_icon"]
++	path = logo/alternative_icon
++	url = https://github.com/hristost/kitty-alternative-icon.git
+diff --git a/logo/alternative_icon b/logo/alternative_icon
+new file mode 160000
+index 00000000..b8b7beb9
+--- /dev/null
++++ b/logo/alternative_icon
+@@ -0,0 +1 @@
++Subproject commit b8b7beb907206ce3129ebd67e24255957ad0dd39
+diff --git a/logo/make.py b/logo/make.py
+index 6b6085e3..2fc43972 100755
+--- a/logo/make.py
++++ b/logo/make.py
+@@ -7,8 +7,8 @@
+ import shutil
+ 
+ base = os.path.dirname(os.path.abspath(__file__))
+-unframed_src = os.path.join(base, 'kitty.svg')
+-framed_src = os.path.join(base, 'kitty-framed.svg')
++unframed_src = os.path.join(base, 'alternative_icon/kitty_icon.png')
++framed_src = os.path.join(base, 'alternative_icon/kitty_icon.png')
+ 
+ 
+ def abspath(x):
+@@ -24,11 +24,13 @@ def run(*args):
+ 
+ def render(output, sz=256, src=unframed_src):
+     print(f'Rendering {os.path.basename(src)} at {sz}x{sz}...')
+-    run('rsvg-convert', '-w', str(sz), '-h', str(sz), '-o', output, src)
++    run('convert', src, '-resize', f'{sz}x{sz}', output)
+     run('optipng', '-quiet', '-o7', '-strip', 'all', output)
+ 
+ 
+ def main():
++    run('git', 'submodule', 'init')
++    run('git', 'submodule', 'update')
+     render(abspath('kitty.png'))
+     render(abspath('kitty-128.png'), sz=128)
+     iconset = abspath('kitty.iconset')
