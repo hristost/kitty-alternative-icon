@@ -26,7 +26,7 @@ cask:
   ```
     postflight do
       system_command 'curl',
-                     args: ["https://raw.githubusercontent.com/hristost/kitty-alternative-icon/test-patch/kitty.icns", "--output", "#{appdir}/kitty.app/Contents/Resources/kitty.icns"],
+                     args: ["https://raw.githubusercontent.com/hristost/kitty-alternative-icon/main/kitty.icns", "--output", "#{appdir}/kitty.app/Contents/Resources/kitty.icns"],
                      sudo: false
       system_command 'touch',
                      args: ["#{appdir}/kitty.app"],
